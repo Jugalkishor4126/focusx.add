@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FocusX</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="popup-body">
+  <main class="popup-shell">
+    <header class="brand-row">
+      <div class="brand-mark" aria-hidden="true">FX</div>
+      <div>
+        <p class="eyebrow">STUDY SESSION</p>
+        <h1>FocusX</h1>
+      </div>
+      <button class="icon-button" id="dashboardButton" type="button" title="Open progress dashboard" aria-label="Open progress dashboard">↗</button>
+    </header>
+    <div class="xp-chip" id="xpChip">Level 1 · 0 XP</div>
+
+    <section class="timer-card" aria-live="polite">
+      <div class="timer-ring"><span id="timerDisplay">25:00</span></div>
+      <p class="session-status" id="sessionStatus">Ready when you are.</p>
+      <label class="task-control" id="taskControl">
+        <span>What are you working on?</span>
+        <input id="taskInput" type="text" maxlength="80" placeholder="e.g. Chemistry revision" autocomplete="off">
+      </label>
+      <label class="duration-control" id="durationControl">
+        <span>Session length</span>
+        <select id="durationSelect" aria-label="Session length">
+          <option value="1">1 minute · demo</option>
+          <option value="15">15 minutes</option>
+          <option value="25" selected>25 minutes</option>
+          <option value="45">45 minutes</option>
+          <option value="60">60 minutes</option>
+        </select>
+      </label>
+      <button class="primary-button" id="sessionButton" type="button">Start focus</button>
+      <div class="session-actions" id="sessionActions" hidden>
+        <button class="secondary-button pause-button" id="pauseButton" type="button">Pause</button>
+      </div>
+    </section>
+
+    <section class="mini-progress">
+      <div class="section-heading">
+        <span>Today's focus</span>
+        <strong><span id="todayMinutes">0</span> / <span id="goalMinutes">60</span> min</strong>
+      </div>
+      <div class="progress-track"><div class="progress-fill" id="todayProgress"></div></div>
+      <p class="muted-note"><span id="streakCount">0</span> day streak · small steps count.</p>
+    </section>
+
+    <p class="popup-message" id="popupMessage" role="status"></p>
+    <footer class="popup-footer"><span>Websites pause during your focus session.</span></footer>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>

@@ -1,0 +1,12 @@
+{
+  "name": "focusx-jugal-add-server",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Local Node.js API for FocusX friend groups and the AI study coach.",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

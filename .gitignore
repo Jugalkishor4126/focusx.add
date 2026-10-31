@@ -1,0 +1,4 @@
+.env
+focusx-data.json
+focusx-data.json.tmp
+node_modules/

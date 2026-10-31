@@ -1,0 +1,31 @@
+{
+  "manifest_version": 3,
+  "name": "FocusX Jugal Add",
+  "short_name": "FocusX",
+  "version": "3.0.0",
+  "description": "Study analytics, XP rewards, friend leaderboards, and an AI study coach.",
+  "permissions": [
+    "storage",
+    "alarms",
+    "tabs",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Focus Coach",
+    "default_popup": "popup.html"
+  },
+  "options_page": "dashboard.html",
+  "web_accessible_resources": [
+    {
+      "resources": ["blocked.html", "styles.css"],
+      "matches": ["http://*/*", "https://*/*"]
+    }
+  ]
+}

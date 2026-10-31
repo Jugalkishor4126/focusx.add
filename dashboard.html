@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FocusX · Smart Study Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dashboard-body">
+  <main class="dashboard-shell">
+    <header class="dashboard-header">
+      <div class="brand-row">
+        <div class="brand-mark" aria-hidden="true">FX</div>
+        <div>
+          <p class="eyebrow">STUDY SMARTER, TOGETHER</p>
+          <h1>FocusX dashboard</h1>
+        </div>
+      </div>
+      <button class="secondary-button" id="backToTimer" type="button">Open focus timer</button>
+    </header>
+
+    <section class="welcome-row">
+      <div>
+        <p class="eyebrow">YOUR PRIVATE STUDY SPACE</p>
+        <h2>Progress you can build on.</h2>
+        <p class="muted-note">Local insights, earned rewards, study support and optional friend competition.</p>
+      </div>
+      <div class="goal-editor">
+        <label for="goalInput">Daily focus goal</label>
+        <div class="goal-input-row">
+          <input id="goalInput" type="number" min="1" max="720" value="60" inputmode="numeric">
+          <span>min</span>
+          <button class="small-button" id="saveGoal" type="button">Save</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="stat-grid" aria-label="Study progress">
+      <article class="stat-card stat-card-primary">
+        <span class="stat-label">FOCUSED TODAY</span>
+        <strong class="stat-value"><span id="focusToday">0</span><small>min</small></strong>
+        <div class="progress-track"><div class="progress-fill" id="dashboardProgress"></div></div>
+        <span class="stat-footnote" id="goalCaption">0% of your goal</span>
+      </article>
+      <article class="stat-card">
+        <span class="stat-label">CURRENT STREAK</span>
+        <strong class="stat-value"><span id="streak">0</span><small>days</small></strong>
+        <span class="stat-footnote">Daily goals reached in a row.</span>
+      </article>
+      <article class="stat-card">
+        <span class="stat-label">SESSIONS TODAY</span>
+        <strong class="stat-value"><span id="completedSessions">0</span></strong>
+        <span class="stat-footnote">Completed focus sessions.</span>
+      </article>
+      <article class="stat-card stat-card-xp">
+        <span class="stat-label">YOUR LEVEL</span>
+        <strong class="stat-value"><span id="level">1</span></strong>
+        <span class="stat-footnote"><span id="totalXp">0</span> XP earned so far.</span>
+      </article>
+    </section>
+
+    <section class="panel reward-panel">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">REWARDS FOR SHOWING UP</p>
+          <h2>XP & badges</h2>
+        </div>
+        <span class="reward-pill" id="xpToNext">0 / 100 XP to next level</span>
+      </div>
+      <div class="level-track"><div class="level-fill" id="levelProgress"></div></div>
+      <p class="panel-copy">Earn 5 XP per focused minute, 20 XP for finishing a session, and a daily-goal bonus. Rewards stay on this device.</p>
+      <div class="badge-grid" id="badgesGrid"></div>
+    </section>
+
+    <section class="panel weekly-panel">
+      <div class="panel-heading">
+        <div>
+          <p class="eyebrow">SMART ANALYTICS · LAST 7 DAYS</p>
+          <h2>Your weekly rhythm</h2>
+        </div>
+        <div class="weekly-totals"><strong><span id="weeklyMinutes">0</span> min</strong><span><span id="weeklySessions">0</span> completed sessions</span></div>
+      </div>
+      <div class="analytics-grid">
+        <div class="analytics-chip"><span>Daily average</span><strong id="weeklyAverage">0 min</strong></div>
+        <div class="analytics-chip"><span>Goals reached</span><strong id="weeklyGoalDays">0 / 7 days</strong></div>
+        <div class="analytics-chip"><span>Vs previous week</span><strong id="weeklyTrend">—</strong></div>
+        <div class="analytics-chip"><span>Best focus window</span><strong id="bestFocusWindow">Not enough data</strong></div>
+      </div>
+      <div class="weekly-chart" id="weeklyChart" role="img" aria-label="Focused minutes for the last seven days"></div>
+      <p class="insight-note" id="smartInsight">Complete a few sessions and FocusX will surface a study pattern here.</p>
+    </section>
+
+    <div class="dashboard-columns">
+      <section class="panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">BROWSER ACTIVITY</p>
+            <h2>Sites visited today</h2>
+          </div>
+          <span class="privacy-pill">Domains only</span>
+        </div>
+        <p class="panel-copy">Time counts while a Chrome window is focused. Page contents are never read.</p>
+        <div id="siteUsageList" class="site-usage-list"></div>
+        <p class="empty-state" id="emptyUsage" hidden>No website time recorded yet.</p>
+      </section>
+
+      <section class="panel website-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">GENTLE GUARDRAILS</p>
+            <h2>Websites to pause</h2>
+          </div>
+          <span class="count-pill" id="siteCount">0</span>
+        </div>
+        <p class="panel-copy">Selected sites show a pause screen during active focus sessions.</p>
+        <label class="toggle-row" for="blockToggle">
+          <span><strong>Pause sites during focus</strong><small>Turn off blocking while keeping the timer.</small></span>
+          <input id="blockToggle" type="checkbox">
+          <span class="toggle-track" aria-hidden="true"><span></span></span>
+        </label>
+        <form id="siteForm" class="site-form">
+          <label class="sr-only" for="siteInput">Website domain</label>
+          <input id="siteInput" type="text" placeholder="e.g. youtube.com" autocomplete="off" spellcheck="false">
+          <button class="small-button" type="submit">Add site</button>
+        </form>
+        <p class="form-message" id="siteMessage" role="status"></p>
+        <ul id="blockedSitesList" class="blocked-sites-list"></ul>
+      </section>
+    </div>
+
+    <div class="dashboard-columns social-ai-columns">
+      <section class="panel group-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">ACCOUNTABILITY GROUP</p>
+            <h2>Friends leaderboard</h2>
+          </div>
+          <span class="connection-pill" id="backendStatus">Checking server…</span>
+        </div>
+        <p class="panel-copy">Share weekly focus minutes, XP, streak and badges. Website names and task titles stay private.</p>
+        <div class="server-settings">
+          <label for="apiBaseInput">Backend URL</label>
+          <div class="site-form">
+            <input id="apiBaseInput" type="url" placeholder="http://localhost:4242">
+            <button class="small-button" id="saveApiBase" type="button">Save</button>
+          </div>
+        </div>
+        <div class="group-setup" id="groupSetup">
+          <label class="field-label" for="displayNameInput">Name shown to friends</label>
+          <input class="wide-input" id="displayNameInput" type="text" maxlength="30" placeholder="Your display name">
+          <label class="field-label" for="groupNameInput">New group name</label>
+          <div class="site-form"><input id="groupNameInput" type="text" maxlength="40" placeholder="e.g. Bio exam crew"><button class="small-button" id="createGroup" type="button">Create group</button></div>
+          <div class="join-row"><input id="joinCodeInput" type="text" maxlength="8" placeholder="Invite code"><button class="secondary-button" id="joinGroup" type="button">Join group</button></div>
+        </div>
+        <div class="group-ready" id="groupReady" hidden>
+          <div class="group-code-row"><div><span class="muted-label">YOUR INVITE CODE</span><strong id="groupCode">—</strong></div><button class="small-button" id="copyCode" type="button">Copy code</button></div>
+          <p class="group-name-line" id="groupNameLabel"></p>
+          <div class="leaderboard-head"><span>STUDY BUDDIES</span><button class="text-button" id="syncLeaderboard" type="button">Sync now</button></div>
+          <ol class="leaderboard-list" id="leaderboardList"></ol>
+          <button class="text-button leave-group" id="leaveGroup" type="button">Leave this group on this device</button>
+        </div>
+        <p class="form-message" id="groupMessage" role="status"></p>
+      </section>
+
+      <section class="panel coach-panel">
+        <div class="panel-heading">
+          <div>
+            <p class="eyebrow">PERSONAL STUDY SUPPORT</p>
+            <h2>AI study coach</h2>
+          </div>
+          <span class="coach-spark" aria-hidden="true">✦</span>
+        </div>
+        <p class="panel-copy">Ask for a practical study plan, focus strategy or reflection on your progress.</p>
+        <div class="prompt-chips">
+          <button type="button" class="prompt-chip" data-prompt="Make me a simple plan for my next 25-minute study session.">Plan my next session</button>
+          <button type="button" class="prompt-chip" data-prompt="Give me one practical way to reduce distractions today.">Reduce distractions</button>
+        </div>
+        <label class="sr-only" for="coachQuestion">Question for the AI study coach</label>
+        <textarea id="coachQuestion" rows="3" maxlength="1200" placeholder="What subject are you studying, and what feels difficult?"></textarea>
+        <button class="primary-button coach-button" id="askCoach" type="button">Ask study coach</button>
+        <div class="coach-response" id="coachResponse" hidden>
+          <span class="coach-mode" id="coachMode"></span>
+          <p id="coachAnswer"></p>
+        </div>
+        <p class="privacy-note">When you ask, your question and aggregate focus stats go to the configured backend. Site names and task titles are excluded.</p>
+      </section>
+    </div>
+
+    <section class="panel recent-panel">
+      <div class="panel-heading">
+        <div><p class="eyebrow">RECENT WORK</p><h2>Latest focus sessions</h2></div>
+      </div>
+      <div id="sessionsList" class="sessions-list"></div>
+      <p class="empty-state" id="emptySessions" hidden>Completed sessions will show up here.</p>
+    </section>
+
+    <footer class="dashboard-footer">
+      <span>Focus summaries and rewards are local. Groups share only leaderboard totals.</span>
+      <div class="footer-actions">
+        <button class="text-button" id="exportData" type="button">Export my data</button>
+        <button class="text-button" id="clearProgress" type="button">Clear history</button>
+      </div>
+    </footer>
+    <p class="dashboard-message" id="dashboardMessage" role="status"></p>
+  </main>
+  <script src="dashboard.js"></script>
+</body>
+</html>
